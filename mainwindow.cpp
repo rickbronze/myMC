@@ -278,6 +278,7 @@ void MainWindow::on_pbChooseDirectory_3_clicked()
 void MainWindow::on_pb_PlaySlideshow_clicked()
 {
     Utils utility;
-    QString slideShowCommand("/bin/sh /home/pi/runslideshow.sh");
+    QString slideShowCommand("/bin/sh /home/pi/runslideshow.sh ");
+    slideShowCommand.append(ui->lePlayDirectory_3->text());
     utility.exec(slideShowCommand.toStdString().c_str());
 }
