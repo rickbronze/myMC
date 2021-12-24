@@ -25,6 +25,7 @@ public:
     ~MainWindow();
     EliMIDI midiControls;
     bool cancelFlag = false;
+    bool nextFlag = false;
     void updateStatus(QString newStatus);
     void updateFileModel(QString newRecordFile);
     void InsertRecordFileList(QStringList newRecordFiles);
@@ -59,6 +60,10 @@ private slots:
     void on_pbChooseDirectory_3_clicked();
 
     void on_pb_PlaySlideshow_clicked();
+
+    void on_pbNext_clicked();
+
+    void on_pbRenameRecording_clicked();
 
 private:
     Ui::MainWindow *ui;

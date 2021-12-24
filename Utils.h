@@ -9,7 +9,7 @@
 *  Created on: Aug 28, 2018
 *      Author: esimanto
 */
-
+//testing git
 #ifndef UTILS_H_
 #define UTILS_H_
 #include <QString>

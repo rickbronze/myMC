@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Eli's MIDI Piano Interface</string>
+   <string>my MIDI Companion</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="mymcresources.qrc">
+    <normaloff>:/myMC/myMC.png</normaloff>:/myMC/myMC.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QPushButton" name="pbCancelPlay">
@@ -29,7 +33,7 @@
      </font>
     </property>
     <property name="toolTip">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Stops either a play or record operation.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Stops everything.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="text">
      <string>Stop</string>
@@ -40,8 +44,8 @@
      <rect>
       <x>0</x>
       <y>20</y>
-      <width>731</width>
-      <height>221</height>
+      <width>721</width>
+      <height>281</height>
      </rect>
     </property>
     <property name="font">
@@ -52,7 +56,7 @@
      </font>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tabPlay">
      <attribute name="title">
@@ -67,8 +71,11 @@
         <height>51</height>
        </rect>
       </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Play a single MIDI song&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="text">
-       <string>Play a File</string>
+       <string>Play a Song</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="lePlayDirectory">
@@ -93,8 +100,11 @@
         <height>51</height>
        </rect>
       </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Play all the songs in a directory randomly.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="text">
-       <string>Play Directory of Files</string>
+       <string>Play Directory of Songs</string>
       </property>
      </widget>
      <widget class="QLabel" name="label">
@@ -129,6 +139,22 @@
        <string>...</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="pbNext">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>110</y>
+        <width>181</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Go on to the next song in the directory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string>Next Song</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tabRecord">
      <attribute name="title">
@@ -156,8 +182,11 @@
         <height>51</height>
        </rect>
       </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the prefix that will be used when naming a recording.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="text">
-       <string>eliMidi</string>
+       <string>myMC</string>
       </property>
      </widget>
      <widget class="QListView" name="lvRecordingSession">
@@ -182,8 +211,8 @@
       <property name="geometry">
        <rect>
         <x>560</x>
-        <y>60</y>
-        <width>91</width>
+        <y>70</y>
+        <width>141</width>
         <height>41</height>
        </rect>
       </property>
@@ -196,7 +225,7 @@
        <rect>
         <x>560</x>
         <y>120</y>
-        <width>101</width>
+        <width>141</width>
         <height>41</height>
        </rect>
       </property>
@@ -228,6 +257,19 @@
       </property>
       <property name="text">
        <string>...</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pbRenameRecording">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>170</y>
+        <width>141</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Rename</string>
       </property>
      </widget>
     </widget>
@@ -295,9 +337,9 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>230</y>
-      <width>681</width>
-      <height>131</height>
+      <y>280</y>
+      <width>901</width>
+      <height>81</height>
      </rect>
     </property>
     <property name="font">
@@ -332,7 +374,7 @@
    </property>
    <widget class="QMenu" name="menuEli_s_MIDI_Companion">
     <property name="title">
-     <string>Eli's MIDI Companion</string>
+     <string>My MIDI Companion</string>
     </property>
    </widget>
    <addaction name="menuEli_s_MIDI_Companion"/>
@@ -348,6 +390,8 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="mymcresources.qrc"/>
+ </resources>
  <connections/>
 </ui>

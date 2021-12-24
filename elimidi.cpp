@@ -30,7 +30,7 @@ void EliMIDI::startListening(QString filePrefix)
 void EliMIDI::playAMIDIFile(QString midiFile)
 {
         QString midiCommand("/home/pi/qt/midibin/");
-        QStringList midiCommandAurguments;
+ //       QStringList midiCommandAurguments;
          midiCommand.append("playsmf --out 1 ");
 
          midiCommand.append(midiFile);
@@ -45,11 +45,28 @@ void EliMIDI::playAMIDIFile(QString midiFile)
     while(!done){
         done = playProcess.waitForFinished(1000);
 //        cout << "midi output flag output is " << done << endl;
+//        done = cancelFlag;
          QApplication::processEvents();
     }
+//        playProcess.waitForFinished(-1);
+    playProcess.close();
+    cout << "midi output flag output is " << done << endl;
+}
+
+void EliMIDI::resetMIDI()
+{
+
+        QProcess resetMIDIProcess;
+        QString midiCommand("/home/pi/qt/midibin/");
+ //       QStringList midiCommandAurguments;
+         midiCommand.append("playsmf --out 1 /home/pi/qt/midibin/SCCRESET.MID");
+         resetMIDIProcess.startDetached(midiCommand);
+        cout << "midi command is " << midiCommand.toStdString() << endl;
+         QApplication::processEvents();
 }
 
 void EliMIDI::cancelPlay() {
+//  playProcess.kill();
   cout << "tried to kill process " << endl;
   QString killCommand("kill -9 ");
   killCommand.append(QString::number(playProcessID));
@@ -63,10 +80,22 @@ void EliMIDI::cancelPlay() {
   QString killAllCommand2("killall -KILL brainstorm");
   killProcess.startDetached(killAllCommand2);
   QApplication::processEvents();
-  QString midiCommand("/home/pi/qt/midibin/");
-  QStringList midiCommandAurguments;
-  midiCommand.append("playsmf --out 1 silentPedal.mid");
-  killProcess.startDetached(midiCommand);
-
+  resetMIDI();
+  playProcess.close();
+  killProcess.close();
   cancelFlag=true;
+}
+
+void EliMIDI::playNext() {
+    cout << "tried to kill process " << endl;
+    QString killCommand("kill -9 ");
+    killCommand.append(QString::number(playProcessID));
+    QProcess killProcess;
+    cout << "kill process is " << killCommand.toStdString() << endl;
+    killProcess.startDetached(killCommand);
+    killProcess.waitForFinished(-1);
+    playProcess.kill();
+    resetMIDI();
+    cancelFlag=false;
+    QApplication::processEvents();
 }

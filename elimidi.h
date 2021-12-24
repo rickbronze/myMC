@@ -17,7 +17,7 @@ public:
     EliMIDI();
     Utils utility;
     QProcess playProcess;
-    int playProcessID;
+    qint64 playProcessID;
     bool cancelFlag=false;
  long start_time_msecs;
 
@@ -25,6 +25,8 @@ public:
  void playAMIDIFile(QString midiFile);
  void startListening(QString filePrefix);
  ~EliMIDI();
+ void playNext();
+ void resetMIDI();
 };
 
 #endif // ELIMIDI_H

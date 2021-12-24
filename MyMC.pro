@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = EliMidi
+TARGET = myMC
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -45,8 +45,6 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-SUBDIRS += \
-    EliMidi.pro
 
-DISTFILES += \
-    EliMidi.pro.user
+RESOURCES += \
+    mymcresources.qrc
