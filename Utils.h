@@ -1,6 +1,5 @@
 #ifndef UTILS_H
 #define UTILS_H
-// https://rickbronze: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@github.com
 
 /*
 * Utils.h
