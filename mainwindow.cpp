@@ -58,7 +58,13 @@ void MainWindow::on_pbStartListening_clicked()
 
 void MainWindow::on_pbPlayDirectory_clicked()
 {
-    if (mode != STOPPED) {
+    bool wasListening = false;
+    if (mode == LISTENING) {
+        wasListening = true;
+        on_pbCancelPlay_clicked();
+        QApplication::processEvents();
+    }
+    else if (mode != STOPPED) {
         QMessageBox msg(QMessageBox::Information,"Not Stopped", "The MIDI is currently performing an operation. \n Please hit the Stop button first and try again.", QMessageBox::Ok);
         QFont font;
         font.setBold(true);
@@ -98,13 +104,23 @@ void MainWindow::on_pbPlayDirectory_clicked()
     }
     cancelFlag = false;
     on_pbCancelPlay_clicked();
+    if(wasListening){
+        on_pbStartListening_clicked();
+    }
+
 }
 
 
 void MainWindow::on_pbPlayFile_clicked()
 {
 
-    if (mode != STOPPED) {
+    bool wasListening = false;
+    if (mode == LISTENING) {
+        wasListening = true;
+        on_pbCancelPlay_clicked();
+        QApplication::processEvents();
+    }
+    else if (mode != STOPPED) {
         QMessageBox msg(QMessageBox::Information,"Not Stopped", "The MIDI is currently performing an operation. \n Please hit the Stop button first and try again.", QMessageBox::Ok);
         QFont font;
         font.setBold(true);
@@ -121,6 +137,9 @@ void MainWindow::on_pbPlayFile_clicked()
     midiControls.playAMIDIFile(fileToPlay);
     midiControls.playProcess.waitForFinished(-1);
     on_pbCancelPlay_clicked();
+    if(wasListening){
+        on_pbStartListening_clicked();
+    }
 }
 
 void MainWindow::updateStatus(QString newStatus)
