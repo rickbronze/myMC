@@ -65,6 +65,8 @@ private slots:
 
     void on_pbRenameRecording_clicked();
 
+    void on_lePlayDirectory_2_textChanged(const QString &arg1);
+
 private:
     Ui::MainWindow *ui;
 };

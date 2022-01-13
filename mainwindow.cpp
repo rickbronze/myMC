@@ -50,9 +50,13 @@ void MainWindow::on_pbStartListening_clicked()
         return;
     }
     mode = LISTENING;
-    QString listenFilePrefix(ui->lePlayDirectory->text() + ui->leRecordPrefix->text());
+    if (!ui->lePlayDirectory_2->text().endsWith("/")) {
+        ui->lePlayDirectory_2->setText(ui->lePlayDirectory_2->text() + "/");
+    }
+
+    QString listenFilePrefix(ui->lePlayDirectory_2->text() + ui->leRecordPrefix->text());
     midiControls.startListening(listenFilePrefix);
-    updateStatus("Listening for any piano play...\n " + ui->lePlayDirectory->text() + ui->leRecordPrefix->text());
+    updateStatus("Listening for any piano play...\n " + ui->lePlayDirectory_2->text() + ui->leRecordPrefix->text());
 
 }
 
@@ -61,7 +65,7 @@ void MainWindow::on_pbPlayDirectory_clicked()
     bool wasListening = false;
     if (mode == LISTENING) {
         wasListening = true;
-        on_pbCancelPlay_clicked();
+        midiControls.cancelPlay();
         QApplication::processEvents();
     }
     else if (mode != STOPPED) {
@@ -74,7 +78,6 @@ void MainWindow::on_pbPlayDirectory_clicked()
         msg.exec();
         return;
     }
-
     vector<string> filesToPlay;
     cancelFlag=false;
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
@@ -89,7 +92,6 @@ void MainWindow::on_pbPlayDirectory_clicked()
 
     cout << "files to play size is " << filesToPlay.size() << endl;
 
-//    for (unsigned int i = 0; i < filesToPlay.size();i++) {
     while(!filesToPlay.empty()){
        if (cancelFlag==false) {
            srand(time(NULL));
@@ -105,6 +107,7 @@ void MainWindow::on_pbPlayDirectory_clicked()
     cancelFlag = false;
     on_pbCancelPlay_clicked();
     if(wasListening){
+        mode = STOPPED;
         on_pbStartListening_clicked();
     }
 
@@ -117,7 +120,7 @@ void MainWindow::on_pbPlayFile_clicked()
     bool wasListening = false;
     if (mode == LISTENING) {
         wasListening = true;
-        on_pbCancelPlay_clicked();
+        midiControls.cancelPlay();
         QApplication::processEvents();
     }
     else if (mode != STOPPED) {
@@ -138,6 +141,7 @@ void MainWindow::on_pbPlayFile_clicked()
     midiControls.playProcess.waitForFinished(-1);
     on_pbCancelPlay_clicked();
     if(wasListening){
+        mode = STOPPED;
         on_pbStartListening_clicked();
     }
 }
@@ -156,6 +160,7 @@ void MainWindow::on_pbCancelPlay_clicked()
     mode = STOPPED;
     cancelFlag = true;
     midiControls.cancelPlay();
+    on_pbStartListening_clicked();
 }
 
 
@@ -204,7 +209,7 @@ void MainWindow::on_pbPlayRecording_clicked()
     bool wasListening = false;
     if (mode == LISTENING) {
         wasListening = true;
-        on_pbCancelPlay_clicked();
+        midiControls.cancelPlay();
         QApplication::processEvents();
     }
     else if (mode != STOPPED) {
@@ -232,6 +237,7 @@ void MainWindow::on_pbPlayRecording_clicked()
        midiControls.playAMIDIFile(fileNameWithPath);
        midiControls.playProcess.waitForFinished(-1);
        updateStatus("Stopped");
+       mode = STOPPED;
        }
        if(wasListening){
            on_pbStartListening_clicked();
@@ -274,7 +280,7 @@ void MainWindow::on_pbDeleteRecording_clicked()
 
 void MainWindow::on_tabWidget_currentChanged(int index)
 {
-    updateFileModel(ui->lePlayDirectory->text());
+    updateFileModel(ui->lePlayDirectory_2->text());
 }
 
 void MainWindow::on_pbChooseDirectory_clicked()
@@ -284,7 +290,6 @@ void MainWindow::on_pbChooseDirectory_clicked()
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
     ui->lePlayDirectory->setText(dir);
-    updateFileModel(ui->lePlayDirectory->text());
 }
 
 void MainWindow::on_lePlayDirectory_textChanged(const QString &arg1)
@@ -293,12 +298,17 @@ void MainWindow::on_lePlayDirectory_textChanged(const QString &arg1)
         ui->lePlayDirectory->setText(ui->lePlayDirectory->text() + "/");
     }
 
-    ui->lePlayDirectory_2->setText(ui->lePlayDirectory->text());
+//    ui->lePlayDirectory_2->setText(ui->lePlayDirectory->text());
 }
 
 void MainWindow::on_pbChooseDirectory_2_clicked()
 {
-    on_pbChooseDirectory_clicked();
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+                                                 ui->lePlayDirectory->text(),
+                                                 QFileDialog::ShowDirsOnly
+                                                 | QFileDialog::DontResolveSymlinks);
+    ui->lePlayDirectory_2->setText(dir);
+    updateFileModel(ui->lePlayDirectory_2->text());
 }
 
 void MainWindow::on_MainWindow_destroyed()
@@ -371,5 +381,14 @@ void MainWindow::on_pbRenameRecording_clicked()
           }}
 }       updateFileModel(ui->lePlayDirectory->text());
 
+
+}
+
+void MainWindow::on_lePlayDirectory_2_textChanged(const QString &arg1)
+{
+    if (!ui->lePlayDirectory_2->text().endsWith("/")) {
+        ui->lePlayDirectory_2->setText(ui->lePlayDirectory_2->text() + "/");
+    }
+    on_pbCancelPlay_clicked();
 
 }
