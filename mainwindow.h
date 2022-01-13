@@ -67,6 +67,8 @@ private slots:
 
     void on_lePlayDirectory_2_textChanged(const QString &arg1);
 
+    void on_pbExit_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

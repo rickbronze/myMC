@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setStyleSheet("background-color: rgb(100, 150, 255);");
     updateStatus("Stopped");
     on_pbStartListening_clicked();
     on_pb_PlaySlideshow_clicked();
@@ -24,6 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tvRecordingSession->setRootIndex(listModel->setRootPath(directory));
     ui->tvRecordingSession->setMinimumWidth(250);
     ui->tabWidget->removeTab(2);
+    ui->pbNext->hide();
+    ui->pbStartListening->setVisible(false);
     QFont stopFont;
     stopFont.setBold(true);
     stopFont.setPointSize(28);
@@ -80,10 +83,12 @@ void MainWindow::on_pbPlayDirectory_clicked()
     }
     vector<string> filesToPlay;
     cancelFlag=false;
+    this->setStyleSheet("background-color: rgb(220, 220, 220);");
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
                                                  ui->lePlayDirectory->text(),
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
+    this->setStyleSheet("background-color: rgb(50, 100, 255);");
     mode = PLAYING;
     updateStatus("Playing Directory of files in " + dir);
     ui->lePlayDirectory->setText(dir);
@@ -93,10 +98,13 @@ void MainWindow::on_pbPlayDirectory_clicked()
     cout << "files to play size is " << filesToPlay.size() << endl;
 
     while(!filesToPlay.empty()){
+        ui->pbNext->show();
        if (cancelFlag==false) {
            srand(time(NULL));
            unsigned int randFile = (rand() % filesToPlay.size());
-           updateStatus("Playing Directory of files in " + dir + "\n" + filesToPlay.at(randFile).c_str());
+           string fileStatus("Playing Directory of files\n");
+           fileStatus.append(midiControls.utility.split_string(filesToPlay.at(randFile).c_str(), "/").at(midiControls.utility.split_string(filesToPlay.at(randFile).c_str(), "/").size()-1));
+           updateStatus(fileStatus.c_str());
            midiControls.playAMIDIFile(filesToPlay.at(randFile).c_str());
            midiControls.playProcess.waitForFinished(-1);
            midiControls.resetMIDI();
@@ -133,10 +141,11 @@ void MainWindow::on_pbPlayFile_clicked()
         msg.exec();
         return;
     }
-
+    this->setStyleSheet("background-color: rgb(220, 220, 220);");
     QString fileToPlay = QFileDialog::getOpenFileName(this, "Open a MIDI file to play", ui->lePlayDirectory->text(), "MIDI (*.mid), All Files (*.*)");
+    this->setStyleSheet("background-color: rgb(50, 100, 255);");
     mode = PLAYING;
-    updateStatus("Playing the file " + fileToPlay);
+    updateStatus("Playing the file:\n" + fileToPlay);
     midiControls.playAMIDIFile(fileToPlay);
     midiControls.playProcess.waitForFinished(-1);
     on_pbCancelPlay_clicked();
@@ -161,6 +170,8 @@ void MainWindow::on_pbCancelPlay_clicked()
     cancelFlag = true;
     midiControls.cancelPlay();
     on_pbStartListening_clicked();
+    ui->pbNext->hide();
+
 }
 
 
@@ -285,10 +296,12 @@ void MainWindow::on_tabWidget_currentChanged(int index)
 
 void MainWindow::on_pbChooseDirectory_clicked()
 {
+    this->setStyleSheet("background-color: rgb(220, 220, 220);");
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
                                                  ui->lePlayDirectory->text(),
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
+    this->setStyleSheet("background-color: rgb(50, 100, 255);");
     ui->lePlayDirectory->setText(dir);
 }
 
@@ -303,10 +316,12 @@ void MainWindow::on_lePlayDirectory_textChanged(const QString &arg1)
 
 void MainWindow::on_pbChooseDirectory_2_clicked()
 {
+    this->setStyleSheet("background-color: rgb(220, 220, 220);");
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
                                                  ui->lePlayDirectory->text(),
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
+    this->setStyleSheet("background-color: rgb(50, 100, 255);");
     ui->lePlayDirectory_2->setText(dir);
     updateFileModel(ui->lePlayDirectory_2->text());
 }
@@ -319,10 +334,12 @@ void MainWindow::on_MainWindow_destroyed()
 
 void MainWindow::on_pbChooseDirectory_3_clicked()
 {
+    this->setStyleSheet("background-color: rgb(220, 220, 220);");
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
                                                  ui->lePlayDirectory_3->text(),
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
+    this->setStyleSheet("background-color: rgb(50, 100, 255);");
     ui->lePlayDirectory_3->setText(dir);
 
 }
@@ -368,9 +385,11 @@ void MainWindow::on_pbRenameRecording_clicked()
               QMessageBox::Yes | QMessageBox::No);
           if (reply == QMessageBox::Yes) {
               QString filter("MIDI (*.mid)");
+              this->setStyleSheet("background-color: rgb(220, 220, 220);");
               QString saveFileName = QFileDialog::getSaveFileName(this, "Rename file to", ui->lePlayDirectory_2->text(), filter, &filter);
               if (!saveFileName.endsWith(".mid"))
                   saveFileName += ".mid";
+              this->setStyleSheet("background-color: rgb(50, 100, 255);");
               QString mvCommand("mv ");
        mvCommand.append(fileNameWithPath);
        mvCommand.append(" ");
@@ -391,4 +410,10 @@ void MainWindow::on_lePlayDirectory_2_textChanged(const QString &arg1)
     }
     on_pbCancelPlay_clicked();
 
+}
+
+void MainWindow::on_pbExit_clicked()
+{
+    on_pbCancelPlay_clicked();
+    exit(0);
 }
