@@ -59,7 +59,7 @@ void EliMIDI::resetMIDI()
         QProcess resetMIDIProcess;
         QString midiCommand("/home/pi/qt/midibin/");
  //       QStringList midiCommandAurguments;
-        midiCommand.append("playsmf --out 1 /home/pi/qt/midibin/SCCRESET.MID");
+ //       midiCommand.append("playsmf --out 1 /home/pi/qt/midibin/SCCRESET.MID");
         midiCommand.append("playsmf --out 1 /home/pi/qt/midibin/reset.mid");
          resetMIDIProcess.startDetached(midiCommand);
         cout << "midi command is " << midiCommand.toStdString() << endl;

@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tvRecordingSession->setMinimumWidth(250);
     ui->tabWidget->removeTab(2);
     ui->pbNext->hide();
+    ui->pbNextRecording->hide();
     ui->pbStartListening->setVisible(false);
     QFont stopFont;
     stopFont.setBold(true);
@@ -346,9 +347,11 @@ void MainWindow::on_pbChooseDirectory_3_clicked()
 
 void MainWindow::on_pb_PlaySlideshow_clicked()
 {
+    QThread screenSaverThread;
     Utils utility;
     QString slideShowCommand("/bin/sh /home/pi/runslideshow.sh ");
     slideShowCommand.append(ui->lePlayDirectory_3->text());
+    slideShowCommand.append(" &");
     utility.exec(slideShowCommand.toStdString().c_str());
 }
 
@@ -416,4 +419,22 @@ void MainWindow::on_pbExit_clicked()
 {
     on_pbCancelPlay_clicked();
     exit(0);
+}
+
+void MainWindow::on_pbNextRecording_clicked()
+{
+//    on_pbCancelPlay_clicked();
+selectNextRow(ui->lvRecordingSession);
+    //  ui->lvRecordingSession ui->lvRecordingSession->currentIndex().row()+1;
+}
+void MainWindow::selectNextRow( QListView *view )
+{
+    QItemSelectionModel *selectionModel = view->selectionModel();
+    int row = -1;
+    if ( selectionModel->hasSelection() )
+        row = selectionModel->selection().first().indexes().first().row();
+    int rowcount = view->model()->rowCount();
+    row = (row + 1 ) % rowcount;
+    QModelIndex newIndex = view->model()->index(row, 0);
+    selectionModel->select( newIndex, QItemSelectionModel::ClearAndSelect );
 }

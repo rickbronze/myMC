@@ -6,6 +6,7 @@
 #include <QFileDialog>
 #include <QStringList>
 #include <QFileSystemModel>
+#include <QListView>
 #include "elimidi.h"
 #define STOPPED 0
 #define PLAYING 1
@@ -31,6 +32,7 @@ public:
     void InsertRecordFileList(QStringList newRecordFiles);
     int mode=0;
 
+    void selectNextRow(QListView *view);
 private slots:
     void on_pbStartListening_clicked();
 
@@ -68,6 +70,8 @@ private slots:
     void on_lePlayDirectory_2_textChanged(const QString &arg1);
 
     void on_pbExit_clicked();
+
+    void on_pbNextRecording_clicked();
 
 private:
     Ui::MainWindow *ui;
