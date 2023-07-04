@@ -62,7 +62,7 @@
      </font>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tabPlay">
      <attribute name="title">
@@ -159,6 +159,19 @@
       </property>
       <property name="text">
        <string>Next Song</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pb_PlaySlideshow_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>210</y>
+        <width>341</width>
+        <height>36</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Play Slideshow</string>
       </property>
      </widget>
     </widget>

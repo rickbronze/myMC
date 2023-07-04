@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tvRecordingSession->setMinimumWidth(250);
     ui->tabWidget->removeTab(2);
     ui->pbNext->hide();
+    ui->pb_PlaySlideshow_2->hide();
     ui->pbNextRecording->hide();
     ui->pbStartListening->setVisible(false);
     QFont stopFont;
@@ -88,7 +89,8 @@ void MainWindow::on_pbPlayDirectory_clicked()
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
                                                  ui->lePlayDirectory->text(),
                                                  QFileDialog::ShowDirsOnly
-                                                 | QFileDialog::DontResolveSymlinks);
+                                                 | QFileDialog::DontResolveSymlinks
+                                                 | QFileDialog::ReadOnly);
     this->setStyleSheet("background-color: rgb(50, 100, 255);");
     mode = PLAYING;
     updateStatus("Playing Directory of files in " + dir);
@@ -100,6 +102,7 @@ void MainWindow::on_pbPlayDirectory_clicked()
 
     while(!filesToPlay.empty()){
         ui->pbNext->show();
+        ui->pb_PlaySlideshow_2->show();
        if (cancelFlag==false) {
            srand(time(NULL));
            unsigned int randFile = (rand() % filesToPlay.size());
@@ -172,6 +175,7 @@ void MainWindow::on_pbCancelPlay_clicked()
     midiControls.cancelPlay();
     on_pbStartListening_clicked();
     ui->pbNext->hide();
+    ui->pb_PlaySlideshow_2->hide();
 
 }
 
@@ -234,7 +238,7 @@ void MainWindow::on_pbPlayRecording_clicked()
         msg.exec();
         return;
     }
-    QString fileNameWithPath(ui->lePlayDirectory->text());
+    QString fileNameWithPath(ui->lePlayDirectory_2->text());
     fileNameWithPath.append("/");
     QModelIndexList templatelist = ui->lvRecordingSession->selectionModel()->selectedIndexes();
     if (templatelist.isEmpty()) // check if has selection
@@ -259,7 +263,7 @@ void MainWindow::on_pbPlayRecording_clicked()
 
 void MainWindow::on_pbDeleteRecording_clicked()
 {
-    QString fileNameWithPath(ui->lePlayDirectory->text());
+    QString fileNameWithPath(ui->lePlayDirectory_2->text());
     fileNameWithPath.append("/");
     QModelIndexList templatelist = ui->lvRecordingSession->selectionModel()->selectedIndexes();
 
@@ -286,7 +290,7 @@ void MainWindow::on_pbDeleteRecording_clicked()
        cout << "rm command is " << rmCommand.toStdString() << endl;
        rmProcess.startDetached(rmCommand);
           }}
-}       updateFileModel(ui->lePlayDirectory->text());
+}       updateFileModel(ui->lePlayDirectory_2->text());
 
 }
 
@@ -301,7 +305,8 @@ void MainWindow::on_pbChooseDirectory_clicked()
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
                                                  ui->lePlayDirectory->text(),
                                                  QFileDialog::ShowDirsOnly
-                                                 | QFileDialog::DontResolveSymlinks);
+                                                 | QFileDialog::DontResolveSymlinks
+                                                    | QFileDialog::ReadOnly);
     this->setStyleSheet("background-color: rgb(50, 100, 255);");
     ui->lePlayDirectory->setText(dir);
 }
@@ -321,7 +326,8 @@ void MainWindow::on_pbChooseDirectory_2_clicked()
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
                                                  ui->lePlayDirectory->text(),
                                                  QFileDialog::ShowDirsOnly
-                                                 | QFileDialog::DontResolveSymlinks);
+                                                 | QFileDialog::DontResolveSymlinks
+                                                    | QFileDialog::ReadOnly);
     this->setStyleSheet("background-color: rgb(50, 100, 255);");
     ui->lePlayDirectory_2->setText(dir);
     updateFileModel(ui->lePlayDirectory_2->text());
@@ -339,7 +345,9 @@ void MainWindow::on_pbChooseDirectory_3_clicked()
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
                                                  ui->lePlayDirectory_3->text(),
                                                  QFileDialog::ShowDirsOnly
-                                                 | QFileDialog::DontResolveSymlinks);
+                                                 | QFileDialog::DontResolveSymlinks
+                                                    | QFileDialog::ReadOnly);
+
     this->setStyleSheet("background-color: rgb(50, 100, 255);");
     ui->lePlayDirectory_3->setText(dir);
 
@@ -364,9 +372,9 @@ void MainWindow::on_pbNext_clicked()
 
 void MainWindow::on_pbRenameRecording_clicked()
 {
-    QString fileNameWithPath(ui->lePlayDirectory->text());
+    QString fileNameWithPath(ui->lePlayDirectory_2->text());
     fileNameWithPath.append("/");
-    QString newFileNameWithPath(ui->lePlayDirectory->text());
+    QString newFileNameWithPath(ui->lePlayDirectory_2->text());
     newFileNameWithPath.append("/");
     QModelIndexList templatelist = ui->lvRecordingSession->selectionModel()->selectedIndexes();
 
@@ -401,7 +409,7 @@ void MainWindow::on_pbRenameRecording_clicked()
        cout << "mv command is " << mvCommand.toStdString() << endl;
        mvProcess.startDetached(mvCommand);
           }}
-}       updateFileModel(ui->lePlayDirectory->text());
+}       updateFileModel(ui->lePlayDirectory_2->text());
 
 
 }
@@ -437,4 +445,9 @@ void MainWindow::selectNextRow( QListView *view )
     row = (row + 1 ) % rowcount;
     QModelIndex newIndex = view->model()->index(row, 0);
     selectionModel->select( newIndex, QItemSelectionModel::ClearAndSelect );
+}
+
+void MainWindow::on_pb_PlaySlideshow_2_clicked()
+{
+    on_pb_PlaySlideshow_clicked();
 }

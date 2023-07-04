@@ -73,6 +73,8 @@ private slots:
 
     void on_pbNextRecording_clicked();
 
+    void on_pb_PlaySlideshow_2_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
