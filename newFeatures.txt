@@ -1,0 +1,23 @@
+1. Change Tempo
+    Add a spin box for +and- or typing in the new tempo on playback Tab
+2. Front End to Free Midi site and downloading/plaing songs directly
+    New Tab
+3. Piano Karaoke - eliminate the piano track to allow someone to play along with everything else
+    New Tab
+4. Duet merge - record both the playback and the player in one file for doing duets or more players parts.
+    Add Merge button on record tab.
+5. Visual Keyboard pop-up
+    New dialog popup when playing a song.
+6. Add database for saving settings...
+    a. Base MIDI directory
+    b. Last played song list
+    c. Base prefix
+    d.
+7. Make App for no input/output device configuration
+    a. Add ingest manager
+    b. Add commands to get list of songs and directories.
+    c. Add commnands to support various functionality
+    d. Add transfer file to app for playing
+    e. Make App
+8.
+
