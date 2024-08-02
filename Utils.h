@@ -1,5 +1,6 @@
 #ifndef UTILS_H
 #define UTILS_H
+// test of github commit
 
 /*
 * Utils.h
@@ -31,6 +32,7 @@
 #include <vector>
 #include <unistd.h>
 #include <glob.h>
+
 using namespace std;
 
 typedef struct {
