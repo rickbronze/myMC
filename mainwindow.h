@@ -75,6 +75,8 @@ private slots:
 
     void on_pb_PlaySlideshow_2_clicked();
 
+    void on_pbDelete_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

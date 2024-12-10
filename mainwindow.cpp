@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->lePlayFilenameWithPath->hide();
     this->setStyleSheet("background-color: rgb(100, 150, 255);");
     updateStatus("Stopped");
     on_pbStartListening_clicked();
@@ -26,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tvRecordingSession->setMinimumWidth(250);
     ui->tabWidget->removeTab(2);
     ui->pbNext->hide();
+    ui->pbDelete->hide();
     ui->pb_PlaySlideshow_2->hide();
     ui->pbNextRecording->hide();
     ui->pbStartListening->setVisible(false);
@@ -102,12 +104,15 @@ void MainWindow::on_pbPlayDirectory_clicked()
 
     while(!filesToPlay.empty()){
         ui->pbNext->show();
+        ui->pbDelete->show();
         ui->pb_PlaySlideshow_2->show();
        if (cancelFlag==false) {
            srand(time(NULL));
            unsigned int randFile = (rand() % filesToPlay.size());
            string fileStatus("Playing Directory of files\n");
            fileStatus.append(midiControls.utility.split_string(filesToPlay.at(randFile).c_str(), "/").at(midiControls.utility.split_string(filesToPlay.at(randFile).c_str(), "/").size()-1));
+           ui->lePlayFilenameWithPath->clear();
+           ui->lePlayFilenameWithPath->setText(filesToPlay.at(randFile).c_str());
            updateStatus(fileStatus.c_str());
            midiControls.playAMIDIFile(filesToPlay.at(randFile).c_str());
            midiControls.playProcess.waitForFinished(-1);
@@ -175,6 +180,7 @@ void MainWindow::on_pbCancelPlay_clicked()
     midiControls.cancelPlay();
     on_pbStartListening_clicked();
     ui->pbNext->hide();
+    ui->pbDelete->hide();
     ui->pb_PlaySlideshow_2->hide();
 
 }
@@ -250,6 +256,8 @@ void MainWindow::on_pbPlayRecording_clicked()
        foreach (const QModelIndex &indexLoop, templatelist){
        fileNameWithPath.append(indexLoop.data(Qt::DisplayRole).toString());
        updateStatus("Playing the file " + fileNameWithPath);
+       ui->lePlayFilenameWithPath->clear();
+       ui->lePlayFilenameWithPath->setText(fileNameWithPath);
        midiControls.playAMIDIFile(fileNameWithPath);
        midiControls.playProcess.waitForFinished(-1);
        updateStatus("Stopped");
@@ -450,4 +458,25 @@ void MainWindow::selectNextRow( QListView *view )
 void MainWindow::on_pb_PlaySlideshow_2_clicked()
 {
     on_pb_PlaySlideshow_clicked();
+}
+
+void MainWindow::on_pbDelete_clicked()
+{
+    QString fileNameWithPath;
+    fileNameWithPath.append(ui->lePlayFilenameWithPath->text());
+      QMessageBox::StandardButton reply;
+      reply = QMessageBox::question(
+          this, "Deleting File",
+          "Deleting file " +
+              fileNameWithPath +
+              "?",
+          QMessageBox::Yes | QMessageBox::No);
+      if (reply == QMessageBox::Yes) {
+   QString rmCommand("rm -r  ");
+   rmCommand.append(fileNameWithPath);
+   QProcess rmProcess;
+   cout << "rm command is " << rmCommand.toStdString() << endl;
+   rmProcess.startDetached(rmCommand);
+   midiControls.playProcess.kill();
+      }
 }
