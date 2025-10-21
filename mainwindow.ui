@@ -62,7 +62,7 @@
      </font>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tabPlay">
      <attribute name="title">
@@ -374,14 +374,14 @@
      <widget class="QLineEdit" name="lePlayDirectory_3">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>30</y>
+        <x>-10</x>
+        <y>20</y>
         <width>671</width>
         <height>51</height>
        </rect>
       </property>
       <property name="text">
-       <string>/home/pi/Pictures</string>
+       <string>&quot;/mnt/spics/2024 Family Pics&quot;</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pbChooseDirectory_3">
