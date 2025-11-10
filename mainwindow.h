@@ -77,6 +77,8 @@ private slots:
 
     void on_pbDelete_clicked();
 
+    void on_pbNetworkPics_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

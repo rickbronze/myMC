@@ -62,7 +62,7 @@
      </font>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="tabPlay">
      <attribute name="title">
@@ -374,14 +374,14 @@
      <widget class="QLineEdit" name="lePlayDirectory_3">
       <property name="geometry">
        <rect>
-        <x>-10</x>
-        <y>20</y>
+        <x>30</x>
+        <y>10</y>
         <width>671</width>
         <height>51</height>
        </rect>
       </property>
       <property name="text">
-       <string>&quot;/mnt/spics/2024 Family Pics&quot;</string>
+       <string>'/home/pi/Pictures'</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pbChooseDirectory_3">
@@ -408,6 +408,19 @@
       </property>
       <property name="text">
        <string>Play Slideshow</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pbNetworkPics">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>90</y>
+        <width>211</width>
+        <height>36</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Eli 2024 Pics</string>
       </property>
      </widget>
     </widget>

@@ -480,3 +480,18 @@ void MainWindow::on_pbDelete_clicked()
    midiControls.playProcess.kill();
       }
 }
+
+void MainWindow::on_pbNetworkPics_clicked()
+{
+QString mountCommand("sudo mount -t cifs //nas-pi/SimanTovPictures /mnt/spics -o username=anonymous,password=,file_mode=0775,dir_mode=0775");
+QProcess mountProcess;
+cout << "mount command is " << mountCommand.toStdString() << endl;
+mountProcess.start(mountCommand);
+
+        ui->lePlayDirectory_3->setText( "/mnt/spics/2024 Family Pics/");
+        ui->lePlayDirectory_3->setText('"' + ui->lePlayDirectory_3->text() + '"');
+        ui->lePlayDirectory_3->text().append("""");
+
+       on_pb_PlaySlideshow_clicked();
+
+}
