@@ -48,3 +48,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     mymcresources.qrc
+
+DISTFILES += \
+    runslideshow.sh
