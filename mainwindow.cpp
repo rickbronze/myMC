@@ -487,11 +487,48 @@ QString mountCommand("sudo mount -t cifs //nas-pi/SimanTovPictures /mnt/spics -o
 QProcess mountProcess;
 cout << "mount command is " << mountCommand.toStdString() << endl;
 mountProcess.start(mountCommand);
-
-        ui->lePlayDirectory_3->setText( "/mnt/spics/2024 Family Pics/");
+if (ui->cbPictureSetList->currentIndex()==0){
+        ui->lePlayDirectory_3->setText( "/mnt/spics/0Sand Art/");
         ui->lePlayDirectory_3->setText('"' + ui->lePlayDirectory_3->text() + '"');
         ui->lePlayDirectory_3->text().append("""");
+}
+else if (ui->cbPictureSetList->currentIndex()==1)
+{
+        ui->lePlayDirectory_3->setText( "/mnt/spics/2025 Family Pics/");
+        ui->lePlayDirectory_3->setText('"' + ui->lePlayDirectory_3->text() + '"');
+        ui->lePlayDirectory_3->text().append("""");
+}
+else if (ui->cbPictureSetList->currentIndex()==2)
+{
+        ui->lePlayDirectory_3->setText( "/mnt/spics/2025 Family Pics/2025GreeceTrip");
+        ui->lePlayDirectory_3->setText('"' + ui->lePlayDirectory_3->text() + '"');
+        ui->lePlayDirectory_3->text().append("""");
+}
+else if (ui->cbPictureSetList->currentIndex()==3)
+{
+        ui->lePlayDirectory_3->setText( "/mnt/spics/0Simi/");
+        ui->lePlayDirectory_3->setText('"' + ui->lePlayDirectory_3->text() + '"');
+        ui->lePlayDirectory_3->text().append("""");
+}
+else if (ui->cbPictureSetList->currentIndex()==4)
+{
+        ui->lePlayDirectory_3->setText( "/mnt/spics/0-JeffKirsh/");
+        ui->lePlayDirectory_3->setText('"' + ui->lePlayDirectory_3->text() + '"');
+        ui->lePlayDirectory_3->text().append("""");
+}
+else if (ui->cbPictureSetList->currentIndex()==5)
+{
+        ui->lePlayDirectory_3->setText( "/mnt/spics/2024 Family Pics/2024ThailandTrip/");
+        ui->lePlayDirectory_3->setText('"' + ui->lePlayDirectory_3->text() + '"');
+        ui->lePlayDirectory_3->text().append("""");
+}
+else if (ui->cbPictureSetList->currentIndex()==6)
+{
+        ui->lePlayDirectory_3->setText( "/mnt/spics/2024 Family Pics/2024HotAirBalloon/");
+        ui->lePlayDirectory_3->setText('"' + ui->lePlayDirectory_3->text() + '"');
+        ui->lePlayDirectory_3->text().append("""");
+}
 
-       on_pb_PlaySlideshow_clicked();
+on_pb_PlaySlideshow_clicked();
 
 }

@@ -413,15 +413,60 @@
      <widget class="QPushButton" name="pbNetworkPics">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>90</y>
-        <width>211</width>
+        <x>40</x>
+        <y>120</y>
+        <width>191</width>
         <height>36</height>
        </rect>
       </property>
       <property name="text">
-       <string>Eli 2024 Pics</string>
+       <string>Select Set</string>
       </property>
+     </widget>
+     <widget class="QComboBox" name="cbPictureSetList">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>70</y>
+        <width>241</width>
+        <height>38</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Sand Art</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2025 Siman-Tov</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2025 Greece Trip</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Simi</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Jeff Kirsh</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2024 Thailand Trip</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2024 Hot Air Balloon Trip</string>
+       </property>
+      </item>
      </widget>
     </widget>
    </widget>
